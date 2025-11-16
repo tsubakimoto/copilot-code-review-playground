@@ -5,6 +5,11 @@ applyTo: '**/*.cs'
 
 # C# Development (additional)
 
+## General Instructions
+
+- When performing a code review, focus on readability and avoid nested ternary operators.
+- Use `IHttpClientFactory` for creating `HttpClient` instances to avoid socket exhaustion and improve performance.
+
 ## Naming Conventions
 
 - Suffix interface names with "Repository" when they represent data access layers (e.g., `IUserRepository`).
@@ -16,9 +21,9 @@ applyTo: '**/*.cs'
 - Suffix class names with "Service" for service layer classes (e.g., `UserService`).
 - Suffix class names with "Base" for base classes (e.g., `UserBase`).
 - Suffix class names with "Controller" for ASP.NET Core controllers (e.g., `UserController`).
-- Suffix class names with "Endpoint" for minimal API endpoint classes (e.g., `UserEndpoint`).
+- Suffix class names with "Endpoint" for MinimalAPI endpoint classes (e.g., `UserEndpoint`).
 
-## Class Conventions
+## Class
 
 - Don't use `public const` fields. Instead, use `public static readonly` for better versioning and compatibility.
 - Use `record` types for immutable data structures and DTOs to leverage built-in value equality and concise syntax.
@@ -29,7 +34,7 @@ applyTo: '**/*.cs'
 - If the value can only be set within the class, use `get; private set;`.
 - If the value can only be set in the constructor, use `get; init;`.
 
-## Method Conventions
+## Method
 
 - Use type parameters with constraints to enforce specific behaviors (e.g., `where T : class`, `where T : struct`).
 - Use `ArgumentNullException.ThrowIfNull` for null argument validation.
@@ -42,7 +47,18 @@ applyTo: '**/*.cs'
 - Use `T.TryParse` methods for safe parsing of strings to numeric or enum types. Don't use `T.Parse` which throws exceptions on failure.
 - Use `as` operator for safe type casting that returns `null` if the cast fails, instead of throwing an exception.
 
-## LINQ and Collections Conventions
+## LINQ and Collections
 
 - Use `Any()` to check for the existence of elements in a collection instead of checking `Count > 0`.
 - Do check for `null` before accessing the result of `FirstOrDefault()`, `LastOrDefault()`, `SingleOrDefault()`, or `ElementAtOrDefault()`.
+- Return `IEnumerable<T>` from methods when the caller only needs to iterate over the collection, to allow for deferred execution and better performance.
+
+## ASP.NET Core
+
+- Use `IHttpContextAccessor` to access the current `HttpContext` in services where it's not directly available.
+- Use `ILogger<T>` for logging within classes to leverage dependency injection and structured logging.
+
+## Testing
+
+- Use `xUnit` as the testing framework for unit tests.
+- Use `NSubstitute` for mocking dependencies in unit tests.
