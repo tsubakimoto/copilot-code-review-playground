@@ -24,6 +24,25 @@ applyTo: '**/*.cs'
 - Use `record` types for immutable data structures and DTOs to leverage built-in value equality and concise syntax.
 - Use `abstract` classes when you want to provide a common base with shared implementation for derived classes.
 - Use `sealed` classes to prevent inheritance when a class is not intended to be a base class.
+- Use primary constructors for records and classes to simplify initialization of properties.
 - If the value cannot be set within the class, use `get;`.
 - If the value can only be set within the class, use `get; private set;`.
 - If the value can only be set in the constructor, use `get; init;`.
+
+## Method Conventions
+
+- Use type parameters with constraints to enforce specific behaviors (e.g., `where T : class`, `where T : struct`).
+- Use `ArgumentNullException.ThrowIfNull` for null argument validation.
+
+## String Handling
+
+- Use `string.IsNullOrWhiteSpace` to check for null, empty, or whitespace strings.
+- Use `string.Equals` with `StringComparison.OrdinalIgnoreCase` for case-insensitive string comparisons.
+- Use `$` string interpolation for constructing strings with variables for better readability.
+- Use `T.TryParse` methods for safe parsing of strings to numeric or enum types. Don't use `T.Parse` which throws exceptions on failure.
+- Use `as` operator for safe type casting that returns `null` if the cast fails, instead of throwing an exception.
+
+## LINQ and Collections Conventions
+
+- Use `Any()` to check for the existence of elements in a collection instead of checking `Count > 0`.
+- Do check for `null` before accessing the result of `FirstOrDefault()`, `LastOrDefault()`, `SingleOrDefault()`, or `ElementAtOrDefault()`.
