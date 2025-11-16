@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace NamingApp;
 
-namespace NamingApp
+internal interface IUserService
 {
-    internal interface UserService
-    {
-        string GetName(int userId);
-    }
+    string GetName(int userId);
 }
